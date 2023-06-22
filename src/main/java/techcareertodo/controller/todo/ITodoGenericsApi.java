@@ -28,6 +28,8 @@ public interface ITodoGenericsApi<D> {
     // UPDATE
     public ResponseMap todoServiceUpdateById(Long id, D d);
 
+    //UPDATE CHECK
+    public ResponseMap todoServiceUpdateByIdCheck(Long id, Boolean done);
     //DONE
     public ResponseMap todoServiceAllDone();
 
@@ -37,8 +39,6 @@ public interface ITodoGenericsApi<D> {
     //DELETE DONE
     public ResponseMap todoServiceDeleteAllDone();
 
-    //DELETE TODO
-    public ResponseMap todoServiceDeleteAllTodo();
 
     //  DELETE ALL
     public ResponseMap todoServiceDeleteAll();

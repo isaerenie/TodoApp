@@ -10,7 +10,6 @@ import techcareertodo.business.service.todo.ITodoGenericsService;
 import techcareertodo.data.entity.Todo;
 import techcareertodo.data.repo.ITodoRepository;
 import techcareertodo.exception.todo.DoneListIsEmpty;
-import techcareertodo.exception.todo.TodoListIsEmpty;
 import techcareertodo.exception.todo.TodoListNotDeleted;
 import techcareertodo.exception.todo.TodoNotFound;
 
@@ -22,8 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TodoServiceImpl implements ITodoGenericsService<TodoDto, Todo> {
-    private final ModelMapperBean modelMapperBean;
     private final ITodoRepository iTodoRepository;
+    private final ModelMapperBean modelMapperBean;
 
 
     @Transactional
@@ -92,6 +91,20 @@ public class TodoServiceImpl implements ITodoGenericsService<TodoDto, Todo> {
     }
 
     @Override
+    public TodoDto todoServiceUpdateByIdCheck(Long id, Boolean done) {
+        Todo todo = DtoToEntity(todoServiceFindById(id));
+        if (todo != null) {
+            todo.setId(id);
+            todo.setDone(done);
+            iTodoRepository.save(todo);
+            todo.setSystemDate(todo.getSystemDate());
+        } else {
+            throw new TodoNotFound();
+        }
+        return EntityToDto(todo);
+    }
+
+    @Override
     public List<TodoDto> todoServiceDone() {
         return iTodoRepository.findAll()
                 .stream().filter(Todo::isDone)
@@ -123,26 +136,11 @@ public class TodoServiceImpl implements ITodoGenericsService<TodoDto, Todo> {
                 .toList().isEmpty();
     }
 
-    @Override
-    public Boolean todoServiceDeleteAllTodo() {
-        if (iTodoRepository.findAll()
-                .stream().filter(todo -> !todo.isDone())
-                .toList().isEmpty()) {
-            throw new TodoListIsEmpty();
-        } else {
-            iTodoRepository.findAll()
-                    .stream().filter(todo -> !todo.isDone())
-                    .forEach(todo -> iTodoRepository.delete(todo));
-        }
-        return iTodoRepository.findAll()
-                .stream().filter(todo -> !todo.isDone())
-                .toList().isEmpty();
-    }
 
     @Override
     public Boolean todoServiceDeleteAll() {
         iTodoRepository.deleteAll();
-       if (iTodoRepository.findAll().isEmpty()) {
+        if (iTodoRepository.findAll().isEmpty()) {
             return true;
         } else {
             throw new TodoListNotDeleted();

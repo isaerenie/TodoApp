@@ -49,7 +49,7 @@ public class JwtUtil {
                 .setIssuedAt(new Date(System.currentTimeMillis())) // başlangıç
                 .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000)) // bitiş
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // kullanılan algoritma ve bu algoritma çalışırken kullanılacak hash key değeri
-                .compact();
+                .0compact();
     }
 
     // token hala geçerli mi? kullanıcı adı doğru ise ve token ın geçerlilik süresi devam ediyorsa true döner.

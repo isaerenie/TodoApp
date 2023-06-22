@@ -3,6 +3,8 @@ package techcareertodo.business.service.todo;
 
 
 
+import techcareertodo.business.dto.TodoDto;
+
 import java.util.List;
 
 public interface ITodoGenericsService<D, E> {
@@ -28,7 +30,8 @@ public interface ITodoGenericsService<D, E> {
     // UPDATE
     public D todoServiceUpdateById(Long id, D d);
 
-    //DONE
+    public D todoServiceUpdateByIdCheck(Long id, Boolean done);
+
     public List<D> todoServiceDone();
 
     //TODO
@@ -37,8 +40,6 @@ public interface ITodoGenericsService<D, E> {
     //DELETE DONE
     public Boolean todoServiceDeleteAllDone();
 
-    //DELETE TODO
-    public Boolean todoServiceDeleteAllTodo();
 
     //  DELETE ALL
     public Boolean todoServiceDeleteAll();
