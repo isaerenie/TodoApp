@@ -137,6 +137,7 @@ public class TodoServiceImpl implements ITodoGenericsService<TodoDto, Todo> {
     }
 
 
+
     @Override
     public Boolean todoServiceDeleteAll() {
         iTodoRepository.deleteAll();
