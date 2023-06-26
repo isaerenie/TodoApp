@@ -16,7 +16,7 @@ import java.util.Map;
 @Log4j2
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/todo/api/v1")
 public class TodoApiImpl implements ITodoGenericsApi<TodoDto> {
 
